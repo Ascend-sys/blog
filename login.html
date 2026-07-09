@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connexion — Le Blog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fffdf8;--ink:#1a1a17;--muted:#6b6b66;--line:#e7e4db;
+    --accent:#1a8f6a;--display:"Fraunces",Georgia,serif;--ui:"Inter",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--ui);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  header.site{border-bottom:1px solid var(--ink);}
+  .nav{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 24px;width:100%;}
+  .brand{font-family:var(--display);font-weight:600;font-size:1.7rem;letter-spacing:-.02em;display:flex;align-items:center;gap:.5rem;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);}
+  .nav-right a{color:var(--muted);font-size:.92rem;}
+  .nav-right a:hover{color:var(--ink);}
+
+  main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 24px;}
+  .card{
+    width:100%;max-width:400px;
+    background:#fff;border:1px solid var(--ink);border-radius:18px;
+    padding:44px 38px;
+    box-shadow:8px 8px 0 var(--accent);
+  }
+  .card .lock{
+    width:52px;height:52px;border-radius:50%;background:var(--accent);
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    font-size:1.4rem;margin-bottom:22px;
+  }
+  .card h1{font-family:var(--display);font-weight:600;font-size:2rem;letter-spacing:-.02em;margin-bottom:6px;}
+  .card .sub{color:var(--muted);font-size:.95rem;margin-bottom:30px;}
+
+  .field{margin-bottom:20px;}
+  .field label{display:block;font-size:.82rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+  .field input{
+    width:100%;font-family:var(--ui);font-size:1rem;
+    padding:13px 16px;border:1px solid var(--line);border-radius:10px;
+    background:var(--bg);transition:.2s;color:var(--ink);
+  }
+  .field input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent)22;}
+
+  .error{background:#fdecea;color:#c0392b;font-size:.88rem;padding:11px 14px;border-radius:9px;margin-bottom:20px;display:none;}
+  .error.show{display:block;}
+
+  .submit{
+    width:100%;font-family:var(--ui);font-size:1rem;font-weight:600;
+    padding:14px;border:1px solid var(--ink);border-radius:40px;
+    background:var(--ink);color:var(--bg);cursor:pointer;transition:.2s;margin-top:6px;
+  }
+  .submit:hover{background:transparent;color:var(--ink);}
+  .back{display:block;text-align:center;margin-top:22px;font-size:.9rem;color:var(--muted);}
+  .back:hover{color:var(--accent);}
+  .hint{margin-top:26px;text-align:center;font-size:.8rem;color:var(--muted);}
+  .hint code{background:var(--bg);border:1px solid var(--line);padding:2px 7px;border-radius:5px;font-size:.78rem;}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="nav">
+    <a href="index.html" class="brand"><span class="dot"></span>Le&nbsp;Blog</a>
+    <div class="nav-right"><a href="index.html">← Retour au blog</a></div>
+  </div>
+</header>
+
+<main>
+  <!-- En PHP : action="login.php" method="POST" -->
+  <form class="card" action="login.html" method="POST">
+    <div class="lock">🔒</div>
+    <h1>Connexion</h1>
+    <p class="sub">Espace réservé aux administrateurs.</p>
+
+    <!-- En PHP : <?php if(!empty($erreur)): ?> ... <?php endif; ?> -->
+    <div class="error" id="err">Nom d'utilisateur ou mot de passe incorrect.</div>
+
+    <div class="field">
+      <label for="u">Nom d'utilisateur</label>
+      <input type="text" id="u" name="username" placeholder="admin" required>
+    </div>
+    <div class="field">
+      <label for="p">Mot de passe</label>
+      <input type="password" id="p" name="password" placeholder="••••••••" required>
+    </div>
+
+    <button type="submit" class="submit">Se connecter</button>
+    <a href="index.html" class="back">Annuler</a>
+
+    <p class="hint">Compte de test : <code>admin</code> / <code>admin123</code></p>
+  </form>
+</main>
+
+</body>
+</html>

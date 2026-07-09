@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fally Ipupa enflamme le Stade de France — Le Blog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;1,8..60,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fffdf8;
+    --ink:#1a1a17;
+    --muted:#6b6b66;
+    --line:#e7e4db;
+    --accent:#1a8f6a;
+    --accent-soft:#eef6f1;
+    --display:"Fraunces", Georgia, serif;
+    --body:"Source Serif 4", Georgia, serif;
+    --ui:"Inter", system-ui, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.75;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+
+  /* reading progress bar */
+  .progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:100;transition:width .1s linear;}
+
+  /* header */
+  header.site{border-bottom:1px solid var(--ink);background:var(--bg);position:sticky;top:0;z-index:50;}
+  .nav{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 24px;}
+  .brand{font-family:var(--display);font-weight:600;font-size:1.7rem;letter-spacing:-.02em;display:flex;align-items:center;gap:.5rem;}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);}
+  .nav-right{display:flex;align-items:center;gap:18px;font-family:var(--ui);font-size:.92rem;}
+  .nav-right a{color:var(--muted);transition:color .2s;}
+  .nav-right a:hover{color:var(--ink);}
+  .btn{font-family:var(--ui);font-size:.9rem;font-weight:500;padding:8px 18px;border-radius:40px;border:1px solid var(--ink);background:transparent;color:var(--ink);transition:.2s;}
+  .btn:hover{background:var(--ink);color:var(--bg);}
+
+  /* article */
+  article{max-width:680px;margin:0 auto;padding:56px 24px 40px;}
+  .back{font-family:var(--ui);font-size:.85rem;color:var(--muted);display:inline-flex;align-items:center;gap:6px;margin-bottom:34px;transition:.2s;}
+  .back:hover{color:var(--accent);gap:10px;}
+
+  .kicker{font-family:var(--ui);font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);margin-bottom:18px;}
+  h1{font-family:var(--display);font-weight:500;font-size:clamp(2.4rem,6vw,3.6rem);line-height:1.05;letter-spacing:-.025em;margin-bottom:20px;}
+  .standfirst{font-size:1.35rem;color:var(--muted);font-style:italic;line-height:1.5;margin-bottom:38px;}
+
+  .byline{display:flex;align-items:center;gap:14px;padding:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:46px;}
+  .avatar{width:46px;height:46px;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--ui);font-weight:600;display:flex;align-items:center;justify-content:center;font-size:1rem;}
+  .byline .who{font-family:var(--ui);}
+  .byline .who .name{font-weight:600;font-size:.98rem;}
+  .byline .who .date{font-size:.85rem;color:var(--muted);}
+  .byline .share{margin-left:auto;display:flex;gap:12px;}
+  .byline .share a{width:38px;height:38px;border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:.2s;}
+  .byline .share a:hover{border-color:var(--ink);color:var(--ink);}
+
+  .lead{font-size:1.28rem;}
+  .lead::first-letter{
+    font-family:var(--display);font-weight:600;
+    float:left;font-size:4.6rem;line-height:.78;
+    padding:6px 12px 0 0;color:var(--accent);
+  }
+  article p{font-size:1.2rem;margin-bottom:28px;}
+  article p:last-of-type{margin-bottom:0;}
+
+  blockquote{
+    border-left:3px solid var(--accent);
+    margin:38px 0;padding:6px 0 6px 26px;
+    font-family:var(--display);font-style:italic;
+    font-size:1.5rem;line-height:1.4;color:var(--ink);
+  }
+  .pull-tags{display:flex;gap:10px;flex-wrap:wrap;margin:46px 0;}
+  .chip{font-family:var(--ui);font-size:.85rem;background:var(--accent-soft);color:var(--accent);padding:7px 16px;border-radius:30px;font-weight:500;}
+
+  /* admin actions — shown only when logged in (PHP : if isset session) */
+  .admin-bar{
+    display:flex;gap:14px;align-items:center;
+    background:#fff;border:1px solid var(--ink);border-radius:14px;
+    padding:16px 22px;margin:46px 0;font-family:var(--ui);font-size:.9rem;
+  }
+  .admin-bar .lbl{color:var(--muted);margin-right:auto;}
+  .admin-bar a{font-weight:500;}
+  .admin-bar .edit{color:var(--accent);}
+  .admin-bar .del{color:#c0392b;}
+
+  /* author footer card */
+  .author-card{display:flex;gap:18px;align-items:center;background:#fdf6e8;border-radius:16px;padding:26px;margin-top:50px;}
+  .author-card .avatar{width:60px;height:60px;font-size:1.3rem;}
+  .author-card .bio .name{font-family:var(--display);font-size:1.3rem;font-weight:600;}
+  .author-card .bio p{font-family:var(--ui);font-size:.92rem;color:var(--muted);margin:6px 0 0;}
+
+  /* more reading */
+  .more{max-width:680px;margin:0 auto;padding:10px 24px 70px;}
+  .more h3{font-family:var(--ui);font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin-bottom:8px;padding-bottom:18px;border-bottom:1px solid var(--line);}
+  .more a{display:block;padding:22px 0;border-bottom:1px solid var(--line);transition:.2s;}
+  .more a .who{font-family:var(--ui);font-size:.82rem;color:var(--muted);margin-bottom:6px;}
+  .more a .ttl{font-family:var(--display);font-weight:500;font-size:1.3rem;line-height:1.2;transition:color .2s;}
+  .more a:hover .ttl{color:var(--accent);}
+
+  footer{border-top:1px solid var(--ink);font-family:var(--ui);font-size:.85rem;color:var(--muted);}
+  .foot-inner{max-width:1100px;margin:0 auto;padding:30px 24px;display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;}
+  .foot-inner nav{display:flex;gap:22px;flex-wrap:wrap;}
+  .foot-inner a:hover{color:var(--ink);}
+
+  @media(max-width:520px){
+    .lead::first-letter{font-size:3.6rem;}
+    article p,.lead{font-size:1.1rem;}
+    .byline .share{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<header class="site">
+  <div class="nav">
+    <a href="index.html" class="brand"><span class="dot"></span>Le&nbsp;Blog</a>
+    <div class="nav-right">
+      <a href="login.html">Connexion</a>
+      <a href="create.html" class="btn">Écrire</a>
+    </div>
+  </div>
+</header>
+
+<article>
+  <a href="index.html" class="back">← Retour aux articles</a>
+
+  <div class="kicker">Concert</div>
+  <h1>Fally Ipupa enflamme le Stade de France</h1>
+  <p class="standfirst">Plus de 80 000 spectateurs réunis pour une soirée historique de la musique congolaise.</p>
+
+  <div class="byline">
+    <span class="avatar">EI</span>
+    <div class="who">
+      <div class="name">Ezechiel ITEWE</div>
+      <div class="date">14 mars 2025 · 3 min de lecture</div>
+    </div>
+    <div class="share">
+      <a href="#" title="Partager">↗</a>
+      <a href="#" title="Sauvegarder">♡</a>
+    </div>
+  </div>
+
+  <p class="lead">Le chanteur congolais Fally Ipupa a réalisé un concert historique au Stade de France devant plus de 80 000 spectateurs. Une soirée inoubliable marquée par ses plus grands tubes et une scène grandiose.</p>
+
+  <p>Dès les premières notes, l'enceinte parisienne s'est transformée en un immense terrain de célébration. La diaspora africaine était massivement représentée, brandissant drapeaux et téléphones pour immortaliser chaque instant d'un spectacle attendu depuis des mois.</p>
+
+  <blockquote>« Ce soir, nous avons écrit une page de l'histoire de notre musique. »</blockquote>
+
+  <p>Entre ses classiques et les titres de son dernier album, l'artiste a tenu la foule en haleine pendant près de trois heures. Les jeux de lumière, les chorégraphies millimétrées et la présence de plusieurs invités surprise ont contribué à faire de cette représentation un moment rare.</p>
+
+  <p>Au-delà du concert, c'est tout un symbole : celui d'une musique africaine qui remplit désormais les plus grandes scènes du monde et s'impose comme une force culturelle incontournable.</p>
+
+  <div class="pull-tags">
+    <span class="chip">Concert</span>
+    <span class="chip">Rumba</span>
+    <span class="chip">Diaspora</span>
+  </div>
+
+  <!-- ===== Barre admin : en PHP, entourer de  <?php if(isset($_SESSION['user_id'])): ?> ... <?php endif; ?> ===== -->
+  <div class="admin-bar">
+    <span class="lbl">Outils administrateur</span>
+    <a href="update.html" class="edit">✎ Modifier</a>
+    <a href="delete.html" class="del" onclick="return confirm('Supprimer cet article ?');">🗑 Supprimer</a>
+  </div>
+
+  <div class="author-card">
+    <span class="avatar">EI</span>
+    <div class="bio">
+      <div class="name">Ezechiel ITEWE</div>
+      <p>Journaliste musical, passionné par les scènes africaines et leur rayonnement international.</p>
+    </div>
+  </div>
+</article>
+
+<section class="more">
+  <h3>À lire ensuite</h3>
+  <a href="detail.html">
+    <div class="who">Beloved MADZWA</div>
+    <div class="ttl">Le nouvel album de Moïse Mbiye est un carton</div>
+  </a>
+  <a href="detail.html">
+    <div class="who">Ezechiel ITEWE</div>
+    <div class="ttl">Ferré Gola de retour avec un nouveau projet musical</div>
+  </a>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <span>© 2025 Le Blog · Projet pédagogique PHP POO</span>
+    <nav>
+      <a href="#">À propos</a>
+      <a href="#">Contact</a>
+      <a href="login.html">Espace admin</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // reading progress bar
+  const bar = document.getElementById('progress');
+  addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
+    bar.style.width = (scrolled * 100) + '%';
+  });
+</script>
+
+</body>
+</html>

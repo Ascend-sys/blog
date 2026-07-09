@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon Blog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;1,8..60,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fffdf8;
+    --ink:#1a1a17;
+    --muted:#6b6b66;
+    --line:#e7e4db;
+    --accent:#1a8f6a;
+    --accent-soft:#eef6f1;
+    --display:"Fraunces", Georgia, serif;
+    --body:"Source Serif 4", Georgia, serif;
+    --ui:"Inter", system-ui, sans-serif;
+    --maxw:1100px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+
+  /* ---------- Header ---------- */
+  header.site{
+    border-bottom:1px solid var(--ink);
+    background:var(--bg);
+    position:sticky;top:0;z-index:50;
+  }
+  .nav{
+    max-width:var(--maxw);margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 24px;
+  }
+  .brand{
+    font-family:var(--display);
+    font-weight:600;font-size:1.7rem;letter-spacing:-.02em;
+    display:flex;align-items:center;gap:.5rem;
+  }
+  .brand .dot{
+    width:10px;height:10px;border-radius:50%;
+    background:var(--accent);display:inline-block;
+  }
+  .nav-right{display:flex;align-items:center;gap:18px;font-family:var(--ui);font-size:.92rem;}
+  .nav-right a{color:var(--muted);transition:color .2s;}
+  .nav-right a:hover{color:var(--ink);}
+  .btn{
+    font-family:var(--ui);font-size:.9rem;font-weight:500;
+    padding:8px 18px;border-radius:40px;border:1px solid var(--ink);
+    background:var(--ink);color:var(--bg);transition:.2s;cursor:pointer;
+  }
+  .btn:hover{background:transparent;color:var(--ink);}
+  .btn.ghost{background:transparent;color:var(--ink);}
+  .btn.ghost:hover{background:var(--ink);color:var(--bg);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    border-bottom:1px solid var(--ink);
+    background:linear-gradient(180deg,#fdf6e8 0%, var(--bg) 100%);
+  }
+  .hero-inner{
+    max-width:var(--maxw);margin:0 auto;padding:72px 24px 64px;
+  }
+  .hero h1{
+    font-family:var(--display);
+    font-weight:500;
+    font-size:clamp(3rem,8vw,6.2rem);
+    line-height:.95;letter-spacing:-.03em;
+    max-width:14ch;
+  }
+  .hero h1 em{font-style:italic;color:var(--accent);}
+  .hero p{
+    font-family:var(--ui);
+    margin-top:22px;font-size:1.15rem;color:var(--muted);max-width:46ch;
+  }
+
+  /* ---------- Layout ---------- */
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  .feed{
+    display:grid;grid-template-columns:1fr 300px;gap:56px;
+    padding:56px 0;
+  }
+
+  /* ---------- Article cards ---------- */
+  .section-label{
+    font-family:var(--ui);font-size:.78rem;font-weight:600;
+    text-transform:uppercase;letter-spacing:.14em;color:var(--muted);
+    padding-bottom:18px;margin-bottom:30px;border-bottom:1px solid var(--line);
+  }
+  .post{
+    display:block;padding:34px 0;border-bottom:1px solid var(--line);
+    transition:.25s;
+  }
+  .post:hover h2{color:var(--accent);}
+  .post-meta{
+    font-family:var(--ui);font-size:.85rem;color:var(--muted);
+    display:flex;align-items:center;gap:10px;margin-bottom:12px;
+  }
+  .avatar{
+    width:26px;height:26px;border-radius:50%;
+    background:var(--accent);color:#fff;font-family:var(--ui);
+    font-size:.72rem;font-weight:600;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .post h2{
+    font-family:var(--display);font-weight:600;
+    font-size:1.7rem;line-height:1.15;letter-spacing:-.02em;
+    transition:color .2s;margin-bottom:10px;
+  }
+  .post .excerpt{
+    color:var(--muted);font-size:1.05rem;max-width:60ch;
+  }
+  .post .tags{
+    margin-top:16px;display:flex;gap:10px;align-items:center;
+    font-family:var(--ui);font-size:.8rem;color:var(--muted);
+  }
+  .chip{
+    background:var(--accent-soft);color:var(--accent);
+    padding:4px 12px;border-radius:30px;font-weight:500;
+  }
+  .read-time{margin-left:auto;}
+
+  /* featured first card */
+  .post.featured{
+    padding-top:0;
+  }
+  .post.featured h2{font-size:2.5rem;}
+  .post.featured .excerpt{font-size:1.18rem;}
+
+  /* ---------- Sidebar ---------- */
+  aside .box{
+    border:1px solid var(--ink);border-radius:14px;padding:26px;
+    margin-bottom:28px;background:#fff;
+  }
+  aside h3{
+    font-family:var(--ui);font-size:.82rem;font-weight:600;
+    text-transform:uppercase;letter-spacing:.12em;color:var(--ink);
+    margin-bottom:18px;
+  }
+  .trend{
+    display:flex;gap:14px;padding:12px 0;border-top:1px solid var(--line);
+  }
+  .trend:first-of-type{border-top:none;padding-top:0;}
+  .trend .rank{
+    font-family:var(--display);font-size:1.6rem;color:var(--line);
+    font-weight:600;line-height:1;min-width:34px;
+  }
+  .trend .t-body .who{font-family:var(--ui);font-size:.78rem;color:var(--muted);margin-bottom:3px;}
+  .trend .t-body .title{font-family:var(--display);font-weight:500;font-size:1rem;line-height:1.25;}
+  .trend:hover .title{color:var(--accent);}
+
+  .topics{display:flex;flex-wrap:wrap;gap:10px;}
+  .topics a{
+    font-family:var(--ui);font-size:.85rem;
+    border:1px solid var(--line);padding:7px 15px;border-radius:30px;
+    color:var(--muted);transition:.2s;
+  }
+  .topics a:hover{border-color:var(--ink);color:var(--ink);}
+
+  /* ---------- Footer ---------- */
+  footer{
+    border-top:1px solid var(--ink);
+    font-family:var(--ui);font-size:.85rem;color:var(--muted);
+  }
+  .foot-inner{
+    max-width:var(--maxw);margin:0 auto;padding:30px 24px;
+    display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;
+  }
+  .foot-inner nav{display:flex;gap:22px;flex-wrap:wrap;}
+  .foot-inner a:hover{color:var(--ink);}
+
+  /* fade-in on load */
+  .post{animation:rise .6s ease both;}
+  .post:nth-child(2){animation-delay:.05s;}
+  .post:nth-child(3){animation-delay:.1s;}
+  .post:nth-child(4){animation-delay:.15s;}
+  .post:nth-child(5){animation-delay:.2s;}
+  @keyframes rise{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+
+  /* ---------- Responsive ---------- */
+  @media(max-width:860px){
+    .feed{grid-template-columns:1fr;gap:0;}
+    aside{display:none;}
+    .hero-inner{padding:54px 24px 46px;}
+  }
+  @media(max-width:520px){
+    .nav-right .hide{display:none;}
+    .post.featured h2{font-size:2rem;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ======= HEADER ======= -->
+<header class="site">
+  <div class="nav">
+    <a href="index.html" class="brand"><span class="dot"></span>Le&nbsp;Blog</a>
+    <div class="nav-right">
+      <a class="hide" href="#">Musique</a>
+      <a class="hide" href="#">Culture</a>
+      <a href="login.html">Connexion</a>
+      <a href="create.html" class="btn ghost">Écrire</a>
+    </div>
+  </div>
+</header>
+
+<!-- ======= HERO ======= -->
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Des histoires qui <em>résonnent</em> avec l'Afrique.</h1>
+    <p>Concerts, albums, retours sur scène — l'actualité musicale racontée par ceux qui la vivent.</p>
+  </div>
+</section>
+
+<!-- ======= FEED ======= -->
+<div class="wrap">
+  <div class="feed">
+
+    <!-- main column -->
+    <main>
+      <div class="section-label">Les derniers articles</div>
+
+      <!-- Article 1 (featured) -->
+      <a href="detail.html" class="post featured">
+        <div class="post-meta">
+          <span class="avatar">EI</span> Ezechiel ITEWE
+          <span>· 14 mars</span>
+        </div>
+        <h2>Fally Ipupa enflamme le Stade de France</h2>
+        <p class="excerpt">Le chanteur congolais a réalisé un concert historique devant plus de 80 000 spectateurs. Une soirée inoubliable marquée par ses plus grands tubes et une scène grandiose.</p>
+        <div class="tags">
+          <span class="chip">Concert</span>
+          <span class="read-time">3 min de lecture</span>
+        </div>
+      </a>
+
+      <!-- Article 2 -->
+      <a href="detail.html" class="post">
+        <div class="post-meta">
+          <span class="avatar" style="background:#c4622a">BM</span> Beloved MADZWA
+          <span>· 12 mars</span>
+        </div>
+        <h2>Le nouvel album de Moïse Mbiye est un carton</h2>
+        <p class="excerpt">Le dernier album gospel cartonne déjà dans toute l'Afrique centrale. En quelques jours, les titres se retrouvent en tête des écoutes sur les plateformes de streaming.</p>
+        <div class="tags">
+          <span class="chip">Gospel</span>
+          <span class="read-time">2 min de lecture</span>
+        </div>
+      </a>
+
+      <!-- Article 3 -->
+      <a href="detail.html" class="post">
+        <div class="post-meta">
+          <span class="avatar">EI</span> Ezechiel ITEWE
+          <span>· 10 mars</span>
+        </div>
+        <h2>Ferré Gola de retour avec un nouveau projet musical</h2>
+        <p class="excerpt">Après plusieurs mois de silence, le roi du ndombolo annonce un projet qui promet de faire parler. Quelques extraits partagés sur les réseaux ont déjà mis les fans en effervescence.</p>
+        <div class="tags">
+          <span class="chip">Rumba</span>
+          <span class="read-time">2 min de lecture</span>
+        </div>
+      </a>
+
+      <!-- Article 4 -->
+      <a href="detail.html" class="post">
+        <div class="post-meta">
+          <span class="avatar" style="background:#c4622a">BM</span> Beloved MADZWA
+          <span>· 8 mars</span>
+        </div>
+        <h2>Werrason célèbre 30 ans de carrière en grande pompe</h2>
+        <p class="excerpt">Le chef d'orchestre a célébré ses 30 ans de carrière avec un grand concert à Kinshasa. Des artistes venus de toute la sous-région ont participé à cette soirée exceptionnelle.</p>
+        <div class="tags">
+          <span class="chip">Hommage</span>
+          <span class="read-time">3 min de lecture</span>
+        </div>
+      </a>
+
+      <!-- Article 5 -->
+      <a href="detail.html" class="post">
+        <div class="post-meta">
+          <span class="avatar">EI</span> Ezechiel ITEWE
+          <span>· 5 mars</span>
+        </div>
+        <h2>Koffi Olomidé signe avec un label international</h2>
+        <p class="excerpt">Le Quadra vient de signer un contrat de distribution internationale qui lui permettra de toucher un public encore plus large. Une nouvelle étape dans une carrière déjà légendaire.</p>
+        <div class="tags">
+          <span class="chip">Industrie</span>
+          <span class="read-time">2 min de lecture</span>
+        </div>
+      </a>
+    </main>
+
+    <!-- sidebar -->
+    <aside>
+      <div class="box">
+        <h3>À la une cette semaine</h3>
+        <a href="detail.html" class="trend">
+          <span class="rank">01</span>
+          <div class="t-body"><div class="who">Ezechiel ITEWE</div><div class="title">Fally Ipupa au Stade de France</div></div>
+        </a>
+        <a href="detail.html" class="trend">
+          <span class="rank">02</span>
+          <div class="t-body"><div class="who">Beloved MADZWA</div><div class="title">L'album gospel qui cartonne</div></div>
+        </a>
+        <a href="detail.html" class="trend">
+          <span class="rank">03</span>
+          <div class="t-body"><div class="who">Ezechiel ITEWE</div><div class="title">Le retour de Ferré Gola</div></div>
+        </a>
+      </div>
+
+      <div class="box">
+        <h3>Explorer les thèmes</h3>
+        <div class="topics">
+          <a href="#">Rumba</a>
+          <a href="#">Gospel</a>
+          <a href="#">Concert</a>
+          <a href="#">Afrobeat</a>
+          <a href="#">Industrie</a>
+          <a href="#">Diaspora</a>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<!-- ======= FOOTER ======= -->
+<footer>
+  <div class="foot-inner">
+    <span>© 2025 Le Blog · Projet pédagogique PHP POO</span>
+    <nav>
+      <a href="#">À propos</a>
+      <a href="#">Contact</a>
+      <a href="login.html">Espace admin</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

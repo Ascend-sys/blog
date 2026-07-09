@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rédiger un article — Le Blog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Source+Serif+4:opsz,wght@8..60,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+  :root{
+    --bg:#fffdf8;--ink:#1a1a17;--muted:#6b6b66;--line:#e7e4db;
+    --accent:#1a8f6a;--display:"Fraunces",Georgia,serif;
+    --body:"Source Serif 4",Georgia,serif;--ui:"Inter",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--ui);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+
+  header.site{border-bottom:1px solid var(--ink);position:sticky;top:0;background:var(--bg);z-index:50;}
+  .nav{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 24px;}
+  .brand{font-family:var(--display);font-weight:600;font-size:1.5rem;letter-spacing:-.02em;display:flex;align-items:center;gap:.5rem;}
+  .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);}
+  .nav .actions{display:flex;gap:12px;align-items:center;}
+  .nav .cancel{color:var(--muted);font-size:.9rem;}
+  .nav .cancel:hover{color:var(--ink);}
+  .publish{font-family:var(--ui);font-size:.9rem;font-weight:600;padding:9px 22px;border-radius:40px;border:1px solid var(--ink);background:var(--accent);color:#fff;border-color:var(--accent);cursor:pointer;transition:.2s;}
+  .publish:hover{filter:brightness(1.08);}
+
+  .editor{max-width:680px;margin:0 auto;padding:50px 24px 80px;}
+  .eyebrow{font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);margin-bottom:26px;}
+
+  /* inputs that look like the article itself */
+  .f-title{
+    width:100%;border:none;background:transparent;
+    font-family:var(--display);font-weight:500;
+    font-size:clamp(2rem,5vw,3rem);line-height:1.1;letter-spacing:-.025em;
+    color:var(--ink);margin-bottom:20px;resize:none;
+  }
+  .f-title::placeholder{color:#cdc9bf;}
+  .f-title:focus{outline:none;}
+
+  .f-author{
+    width:100%;border:none;background:transparent;
+    font-family:var(--ui);font-size:1rem;color:var(--muted);
+    padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:30px;
+  }
+  .f-author:focus{outline:none;color:var(--ink);}
+  .f-author::placeholder{color:#cdc9bf;}
+
+  .f-content{
+    width:100%;min-height:340px;border:none;background:transparent;
+    font-family:var(--body);font-size:1.25rem;line-height:1.7;color:var(--ink);resize:vertical;
+  }
+  .f-content::placeholder{color:#cdc9bf;}
+  .f-content:focus{outline:none;}
+
+  .toolbar{
+    display:flex;gap:8px;margin-bottom:24px;padding-bottom:18px;border-bottom:1px dashed var(--line);
+  }
+  .toolbar span{
+    width:36px;height:36px;border:1px solid var(--line);border-radius:8px;
+    display:flex;align-items:center;justify-content:center;color:var(--muted);
+    font-family:var(--display);cursor:pointer;transition:.2s;user-select:none;
+  }
+  .toolbar span:hover{border-color:var(--ink);color:var(--ink);}
+
+  .meta-note{margin-top:34px;font-size:.85rem;color:var(--muted);background:#fdf6e8;border-radius:10px;padding:14px 18px;}
+
+  @media(max-width:520px){.f-content{font-size:1.1rem;}}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="nav">
+    <a href="index.html" class="brand"><span class="dot"></span>Le&nbsp;Blog</a>
+    <div class="actions">
+      <a href="index.html" class="cancel">Annuler</a>
+      <button type="submit" form="editForm" class="publish">Publier</button>
+    </div>
+  </div>
+</header>
+
+<!-- En PHP : action="create.php" (ou update.php?id=...) method="POST" -->
+<form class="editor" id="editForm" action="create.html" method="POST">
+  <div class="eyebrow">Nouvel article</div>
+
+  <input class="f-title" name="titre" placeholder="Titre de l'article…" required>
+
+  <input class="f-author" name="auteur" placeholder="Votre nom (auteur)…" required>
+
+  <div class="toolbar" aria-hidden="true">
+    <span style="font-weight:600">B</span>
+    <span style="font-style:italic">i</span>
+    <span>„ "</span>
+    <span>—</span>
+  </div>
+
+  <textarea class="f-content" name="contenu" placeholder="Racontez votre histoire…" required></textarea>
+
+  <p class="meta-note"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i> Les champs <strong>titre</strong>, <strong>auteur</strong> et <strong>contenu</strong> correspondent exactement aux colonnes de la table <code>articles</code>. Ce formulaire envoie les données en POST vers <code>create.php</code>.</p>
+</form>
+
+</body>
+</html>
